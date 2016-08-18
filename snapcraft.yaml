@@ -1,8 +1,8 @@
 name: alsa-utils
-version: 1.1.2-1
+version: 1.1.2-2
 summary: Utilities for configuring and using ALSA
 description: |
-    Utilities for configuring and using ALSA
+    This package contains various tools to configure audio devices via ALSA
     ALSA is the Advanced Linux Sound Architecture.
 confinement: devmode
 
@@ -60,17 +60,19 @@ parts:
         source-branch: 1.1.2
         configflags:
             - --prefix=/usr
-            - --libexec=/usr/lib/
+            - --sysconfdir=/etc
+            - --libexec=/usr/lib
+            - --libdir=/usr/lib
+            - --localstatedir=/var 
         build-packages:
             - libfftw3-bin
             - libfftw3-dev
-            - libfftw3-long3
-            - libfftw3-quad3
+            - libasound2-dev
             - libncursesw5-dev
             - libsamplerate0-dev
         stage-packages:
-            - libasound2-dev
             - libasound2-plugins
+            - libasound2-data
             - libfftw3-double3
             - libncursesw5
             - libsamplerate0
