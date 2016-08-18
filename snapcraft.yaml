@@ -1,0 +1,81 @@
+name: alsa-utils
+version: 1.1.2-1
+summary: Utilities for configuring and using ALSA
+description: |
+    Utilities for configuring and using ALSA
+    ALSA is the Advanced Linux Sound Architecture.
+confinement: devmode
+
+apps:
+    speaker-test:
+        command: usr/bin/speaker-test
+    aplay:
+        command: usr/bin/aplay
+    alsactl:
+        command: usr/sbin/alsactl
+    amixer:
+        command: usr/bin/amixer
+    aplay:
+        command: usr/bin/aplay
+    aseqnet:
+        command: usr/bin/aseqnet
+    alsatplg:
+        command: usr/bin/alsatplg
+    arecordmidi:
+        command: usr/bin/arecordmidi
+    amidi:
+        command: usr/bin/amidi
+    alsaloop:
+        command: usr/bin/alsaloop
+    alsaucm:
+        command: usr/bin/alsaucm
+    aconnect:
+        command: usr/bin/aconnect
+    iecset:
+        command: usr/bin/iecset
+    alsabat:
+        command: usr/bin/alsabat
+    aseqdump:
+        command: usr/bin/aseqdump
+    aplaymidi:
+        command: usr/bin/aplaymidi
+    alsamixer:
+        command: usr/bin/alsamixer
+    arecord:
+        command: usr/bin/arecord
+
+#plugs:
+#    client:
+#        interface:
+
+#slots:
+#    service:
+#        interface:
+
+parts:
+    alsa-utils:
+        plugin: autotools 
+        source: https://github.com/woodrow-shen/alsa-utils.git
+        source-type: git
+        source-branch: 1.1.2
+        configflags:
+            - --prefix=/usr
+            - --libexec=/usr/lib/
+        build-packages:
+            - libfftw3-bin
+            - libfftw3-dev
+            - libfftw3-long3
+            - libfftw3-quad3
+            - libncursesw5-dev
+            - libsamplerate0-dev
+        stage-packages:
+            - libasound2-dev
+            - libasound2-plugins
+            - libfftw3-double3
+            - libncursesw5
+            - libsamplerate0
+            - libtinfo5
+
+        snap:
+            - -usr/include
+
