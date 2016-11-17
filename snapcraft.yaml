@@ -64,6 +64,7 @@ parts:
             - --libexec=/usr/lib
             - --libdir=/usr/lib
             - --localstatedir=/var 
+            - --disable-xmlto
         build-packages:
             - libfftw3-bin
             - libfftw3-dev
@@ -77,6 +78,7 @@ parts:
             - libncursesw5
             - libsamplerate0
             - libtinfo5
+            - gettext
 
         snap:
             - -usr/include
