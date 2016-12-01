@@ -4,56 +4,85 @@ summary: Utilities for configuring and using ALSA
 description: |
     This package contains various tools to configure audio devices via ALSA
     ALSA is the Advanced Linux Sound Architecture.
-confinement: devmode
+confinement: strict
 
 apps:
     speaker-test:
         command: usr/bin/speaker-test
-    aplay:
-        command: usr/bin/aplay
+        plugs: [ alsa, home ]
     alsactl:
         command: usr/sbin/alsactl
+        plugs: [ alsa, home ]
     amixer:
         command: usr/bin/amixer
+        plugs: [ alsa, home ]
     aplay:
         command: usr/bin/aplay
+        plugs: [ alsa, home ]
     aseqnet:
         command: usr/bin/aseqnet
+        plugs: [ alsa, home ]
     alsatplg:
         command: usr/bin/alsatplg
+        plugs: [ alsa, home ]
     arecordmidi:
         command: usr/bin/arecordmidi
+        plugs: [ alsa, home ]
     amidi:
         command: usr/bin/amidi
+        plugs: [ alsa, home ]
     alsaloop:
         command: usr/bin/alsaloop
+        plugs: [ alsa, home ]
     alsaucm:
         command: usr/bin/alsaucm
+        plugs: [ alsa, home ]
     aconnect:
         command: usr/bin/aconnect
+        plugs: [ alsa, home ]
     iecset:
         command: usr/bin/iecset
+        plugs: [ alsa, home ]
     alsabat:
         command: usr/bin/alsabat
+        plugs: [ alsa, home ]
     aseqdump:
         command: usr/bin/aseqdump
+        plugs: [ alsa, home ]
     aplaymidi:
         command: usr/bin/aplaymidi
+        plugs: [ alsa, home ]
     alsamixer:
         command: usr/bin/alsamixer
+        plugs: [ alsa, home ]
     arecord:
         command: usr/bin/arecord
+        plugs: [ alsa, home ]
 
-#plugs:
-#    client:
-#        interface:
-
-#slots:
-#    service:
-#        interface:
+plugs:
+    alsa: alsa
+    home: home
 
 parts:
+    alsa-lib:
+        plugin: autotools
+        source: https://github.com/woodrow-shen/alsa-lib.git
+        source-type: git
+        source-branch: 1.1.2
+        configflags:
+            - --prefix=/usr
+            - --sysconfdir=/etc
+            - --libexec=/usr/lib
+            - --libdir=/usr/lib
+            - --localstatedir=/var
+            - --with-configdir=/snap/alsa-utils/current/usr/share/alsa
+        stage:
+            - -usr/share/alsa/alsa.conf
+            - -usr/share/alsa/pcm
+            - -usr/share/alsa/topology/broadwell
+
     alsa-utils:
+        after: [ alsa-lib ]
         plugin: autotools 
         source: https://github.com/woodrow-shen/alsa-utils.git
         source-type: git
@@ -67,17 +96,16 @@ parts:
         build-packages:
             - libfftw3-bin
             - libfftw3-dev
-            - libasound2-dev
             - libncursesw5-dev
             - libsamplerate0-dev
+            - xmlto
+            - gettext
         stage-packages:
             - libasound2-plugins
-            - libasound2-data
             - libfftw3-double3
             - libncursesw5
             - libsamplerate0
             - libtinfo5
-
         snap:
             - -usr/include
 
